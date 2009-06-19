@@ -1,0 +1,6 @@
+Options +ExecCGI
+AddHandler cgi-script .cgi
+
+<Files "amazon-auth-proxy.yaml">
+	deny from all
+</Files>

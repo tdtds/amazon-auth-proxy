@@ -1,0 +1,25 @@
+Authentication Proxy Server of Amazon Product Advertising API.
+(Amazon Product Advertising APIの認証を代替するPROXYサーバ)
+
+amazon-auth-proxy.cgiは、RubyのCGIとして書かれています。従来の
+Amazon ECS APIとして動作し、指定した言語のAmazon PAAPIに対して
+認証済みリクエストを送信、結果をそのまま返します。
+
+amazon-auth-proxy.cgiは、同じディレクトリにあるamazon-auth-proxy.yaml
+というファイルを読み、そこに記述されている各種APIキーとAPIのエ
+ントリポイント、アソシエイトIDなどを使ってAPI呼び出しを構築しま
+す(amazon-auth-proxy.sample.yamlを参照)。amazon-auth-proxy.yaml
+には公開してはいけない情報が含まれるので、.htaccessなどによって
+アクセスを禁止しなくてはいけません(dot.htaccess参照)。
+
+amazon-auth-proxy.yamlで指定するentry_pointには、以下のような各
+国向けAmazonのAPIエントリポイントURLを指定します:
+
+   http://webservices.amazon.com/onca/xml
+   http://webservices.amazon.co.jp/onca/xml
+   http://webservices.amazon.fr/onca/xml
+   http://webservices.amazon.co.uk/onca/xml
+   http://webservices.amazon.de/onca/xml
+
+                   Copyright (C) 2009 TADA Tadashi <t@tdtds.jp>
+           You can redistribute it and/or modify it under GPL2.
