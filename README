@@ -21,5 +21,8 @@ amazon-auth-proxy.yamlで指定するentry_pointには、以下のような各
    http://webservices.amazon.co.uk/onca/xml
    http://webservices.amazon.de/onca/xml
 
+なお、module HMACは、えろぺおさんのコードを流用しています。
+<http://elpeo.jp/diary/20090512.html#p01>
+
                    Copyright (C) 2009 TADA Tadashi <t@tdtds.jp>
            You can redistribute it and/or modify it under GPL2.

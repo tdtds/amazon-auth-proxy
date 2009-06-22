@@ -22,8 +22,8 @@ module HMAC
 	module_function
 
 	def sha256( key, message )
-		ikey = IPAD
-		okey = OPAD
+		ikey = IPAD.dup
+		okey = OPAD.dup
 		key.size.times do |i|
 			ikey[i] = key[i] ^ IPAD[i]
 			okey[i] = key[i] ^ OPAD[i]
