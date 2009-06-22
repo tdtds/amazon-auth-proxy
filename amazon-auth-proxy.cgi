@@ -38,13 +38,16 @@ def paapi( conf, params )
 	qs = [].tap {|q|
 		params.each do |key, values|
 			if key == 'AWSAccessKeyId'
-				q << "#{u key}=#{u conf.access_key}"
+				q << "#{u key}=#{u conf['access_key']}"
 			else
 				q << "#{u key}=#{u values[0]}"
 			end
 		end
-		if params.keys.include?( 'AssociateTag' ) then
-			q << "AssociateTag=#{u conf.default_aid}"
+		unless params.keys.include?( 'AssociateTag' ) then
+			q << "AssociateTag=#{u conf['default_aid']}"
+		end
+		unless params.keys.include?( 'Timestamp' ) then
+			q << "Timestamp=#{u DateTime.now.new_offset.strftime('%Y-%m-%dT%XZ') }"
 		end
 	}.sort
 
