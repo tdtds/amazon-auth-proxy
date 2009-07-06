@@ -1,3 +1,4 @@
+#!/home/sho/bin/ruby18
 #!/usr/bin/env ruby
 #
 # amazon-auth-proxy.rb:
@@ -9,6 +10,7 @@
 
 require 'uri'
 require 'base64'
+require 'digest/sha2'
 require 'time'
 require 'timeout'
 require 'open-uri'
@@ -37,8 +39,10 @@ end
 def paapi( conf, params )
 	qs = [].tap {|q|
 		params.each do |key, values|
-			if key == 'AWSAccessKeyId'
+			if key =~ /^(AWSAccessKeyId|SubscriptionId)$/
 				q << "#{u key}=#{u conf['access_key']}"
+			elsif key == 'Timestamp'
+				# ignore this key
 			else
 				q << "#{u key}=#{u values[0]}"
 			end
@@ -46,9 +50,7 @@ def paapi( conf, params )
 		unless params.keys.include?( 'AssociateTag' ) then
 			q << "AssociateTag=#{u conf['default_aid']}"
 		end
-		unless params.keys.include?( 'Timestamp' ) then
-			q << "Timestamp=#{u DateTime.now.new_offset.strftime('%Y-%m-%dT%XZ') }"
-		end
+		q << "Timestamp=#{u DateTime.now.new_offset.strftime('%Y-%m-%dT%XZ') }"
 	}.sort
 
 	uri = URI.parse( conf['entry_point'] )
@@ -56,7 +58,7 @@ def paapi( conf, params )
 	begin
 		require 'openssl'
 		hash = OpenSSL::HMAC::digest( OpenSSL::Digest::SHA256.new, conf['secret_key'], message )
-	rescue NameError
+	rescue LoadError
 		hash = HMAC::sha256( conf['secret_key'], message )
 	end
 	qs << "Signature=#{u [hash].pack( "m" ).chomp}"
@@ -75,10 +77,17 @@ if __FILE__ == $0 then
 	require 'yaml'
 	conf = YAML::load_file( 'amazon-auth-proxy.yaml' )
 
-	print cgi.header(
-		'status' => '200',
-		'type' => 'text/xml'
-	)
-	print paapi( conf, cgi.params )
+	begin
+		header = cgi.header(
+			'status' => '200',
+			'type' => 'text/xml;charset="UTF-8"'
+		)
+		body = paapi( conf, cgi.params )
+		print header
+		print body
+	rescue
+		print "Status: 500\nContent-Type: text/plain\n\n"
+		print $!.message
+	end
 end
 
