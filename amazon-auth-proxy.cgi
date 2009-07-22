@@ -64,9 +64,10 @@ def paapi( conf, params )
 	qs << "Signature=#{u [hash].pack( "m" ).chomp}"
 
 	url = uri.to_s + '?' + qs * '&'
+	return [302, url] if conf['use_redirect']
 
 	timeout( 10 ) do
-		open( url, &:read )
+		return [200, open( url, &:read )]
 	end
 end
 
@@ -78,13 +79,20 @@ if __FILE__ == $0 then
 	conf = YAML::load_file( 'amazon-auth-proxy.yaml' )
 
 	begin
-		header = cgi.header(
-			'status' => '200',
-			'type' => 'text/xml;charset="UTF-8"'
-		)
-		body = paapi( conf, cgi.params )
-		print header
-		print body
+		status, body = paapi( conf, cgi.params )
+		if status == 200 then
+			print cgi.header(
+				'status' => '200',
+				'type' => 'text/xml;charset="UTF-8"'
+			)
+			print body
+		elsif 302
+			print cgi.header(
+				'status' => '302',
+				'location' => body
+			)
+			puts "\n\n"
+		end
 	rescue
 		print "Status: 500\nContent-Type: text/plain\n\n"
 		print $!.message

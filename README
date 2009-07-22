@@ -3,7 +3,8 @@ Authentication Proxy Server of Amazon Product Advertising API.
 
 amazon-auth-proxy.cgiは、RubyのCGIとして書かれています。従来の
 Amazon ECS APIとして動作し、指定した言語のAmazon PAAPIに対して
-認証済みリクエストを送信、結果をそのまま返します。
+有効な認証済みリクエストを作成して呼び出し元に返します。または
+実際にAPIをコールしたのち、結果をそのまま返します。
 
 amazon-auth-proxy.cgiは、同じディレクトリにあるamazon-auth-proxy.yaml
 というファイルを読み、そこに記述されている各種APIキーとAPIのエ
@@ -20,6 +21,11 @@ amazon-auth-proxy.yamlで指定するentry_pointには、以下のような各
    http://webservices.amazon.fr/onca/xml
    http://webservices.amazon.co.uk/onca/xml
    http://webservices.amazon.de/onca/xml
+   http://webservices.amazon.ca/onca/xml
+
+use_redirectは、通常trueにして運用してください。これは構築した
+AmazonへのリクエストURLを、302リダイレクトとして呼び出し元に返
+すという意味です。これにより、proxyサーバの負荷を低減します。
 
 なお、module HMACは、えろぺおさんのコードを流用しています。
 <http://elpeo.jp/diary/20090512.html#p01>
