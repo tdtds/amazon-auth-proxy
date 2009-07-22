@@ -16,6 +16,15 @@ require 'open-uri'
 require 'erb'
 include ERB::Util
 
+if RUBY_VERSION < '1.8.7'
+	class Object
+		def tap
+			yield(self)
+			self
+		end
+	end
+end
+
 module HMAC
 	IPAD = "\x36" * 64
 	OPAD = "\x5c" * 64
