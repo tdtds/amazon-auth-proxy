@@ -58,7 +58,7 @@ def paapi( conf, params )
 	begin
 		require 'openssl'
 		hash = OpenSSL::HMAC::digest( OpenSSL::Digest::SHA256.new, conf['secret_key'], message )
-	rescue LoadError
+	rescue LoadError, NameError
 		hash = HMAC::sha256( conf['secret_key'], message )
 	end
 	qs << "Signature=#{u [hash].pack( "m" ).chomp}"
