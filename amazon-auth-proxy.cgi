@@ -1,4 +1,3 @@
-#!/home/sho/bin/ruby18
 #!/usr/bin/env ruby
 #
 # amazon-auth-proxy.rb:
