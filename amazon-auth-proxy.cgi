@@ -16,7 +16,8 @@ require 'open-uri'
 require 'erb'
 include ERB::Util
 
-if RUBY_VERSION < '1.8.7'
+# for ruby < 1.8.7
+unless defined?( Object::tap )
 	class Object
 		def tap
 			yield(self)
