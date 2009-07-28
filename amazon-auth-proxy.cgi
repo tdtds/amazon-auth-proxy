@@ -53,10 +53,9 @@ def paapi( conf, params )
 				q << "#{u key}=#{u conf['access_key']}"
 			elsif key == 'Timestamp'
 				# ignore this key
-			elsif key == 'Style'
-				xslt = true
 			else
 				q << "#{u key}=#{u values[0]}"
+				xslt = true if key == 'Style'
 			end
 		end
 		unless params.keys.include?( 'AssociateTag' ) then
