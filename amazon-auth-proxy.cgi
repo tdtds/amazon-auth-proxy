@@ -46,12 +46,15 @@ module HMAC
 end
 
 def paapi( conf, params )
+	xslt = false
 	qs = [].tap {|q|
 		params.each do |key, values|
 			if key =~ /^(AWSAccessKeyId|SubscriptionId)$/
 				q << "#{u key}=#{u conf['access_key']}"
 			elsif key == 'Timestamp'
 				# ignore this key
+			elsif key == 'Style'
+				xslt = true
 			else
 				q << "#{u key}=#{u values[0]}"
 			end
@@ -62,7 +65,7 @@ def paapi( conf, params )
 		q << "Timestamp=#{u DateTime.now.new_offset.strftime('%Y-%m-%dT%XZ') }"
 	}.sort
 
-	uri = URI.parse( conf['entry_point'] )
+	uri = URI.parse( conf[xslt ? 'xslt_entry_point' : 'entry_point'] )
 	message = ['GET', uri.host, uri.path, qs * '&'] * "\n"
 	begin
 		require 'openssl'

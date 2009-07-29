@@ -1,5 +1,6 @@
 access_key: YOUR ACCESS KEY
 secret_key: YOUR SECRET KEY
 entry_point: ENTRY POINT URL OF AMAZON FOR YOUR COUNTRY
+xslt_entry_point: XSL ENTRY POINT URL OF AMAZON FOR YOUR COUNTRY
 default_aid: cshs-22
 use_redirect: true
