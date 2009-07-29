@@ -23,6 +23,16 @@ amazon-auth-proxy.yamlで指定するentry_pointには、以下のような各
    http://webservices.amazon.de/onca/xml
    http://webservices.amazon.ca/onca/xml
 
+また、Styleパラメタを使用したクエリのため、xslt_entry_pointとし
+て以下のURLも指定してください:
+
+	http://xml-us.amznxslt.com/onca/xml
+	http://xml-jp.amznxslt.com/onca/xml
+	http://xml-fr.amznxslt.com/onca/xml
+	http://xml-uk.amznxslt.com/onca/xml
+	http://xml-de.amznxslt.com/onca/xml
+	http://xml-ca.amznxslt.com/onca/xml
+
 use_redirectは、通常trueにして運用してください。これは構築した
 AmazonへのリクエストURLを、302リダイレクトとして呼び出し元に返
 すという意味です。これにより、proxyサーバの負荷を低減します。
