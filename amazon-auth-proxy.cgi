@@ -27,21 +27,23 @@ unless defined?( Object::tap )
 end
 
 module HMAC
-	IPAD = "\x36" * 64
-	OPAD = "\x5c" * 64
+	IPAD = [0x36] * 64
+	OPAD = [0x5c] * 64
 
 	module_function
 
 	def sha256( key, message )
 		ikey = IPAD.dup
 		okey = OPAD.dup
-		key.size.times do |i|
+		key = [].tap {|k| key.each_byte {|x| k << x}}
+		key.size.times{|i|
 			ikey[i] = key[i] ^ IPAD[i]
 			okey[i] = key[i] ^ OPAD[i]
-		end
-
-		value = Digest::SHA256.digest( ikey + message )
-		value = Digest::SHA256.digest( okey + value )
+		}
+		ik = ikey.pack( "C*" )
+		ok = okey.pack( "C*" )
+		value = Digest::SHA256.digest( ik + message )
+		value = Digest::SHA256.digest( ok + value )
 	end
 end
 
