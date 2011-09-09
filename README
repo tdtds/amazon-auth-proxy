@@ -1,10 +1,15 @@
 Authentication Proxy Server of Amazon Product Advertising API.
 (Amazon Product Advertising APIの認証を代替するPROXYサーバ)
 
+■amazon-auth-proxy.cgi, amazon-auth-proxy.fcgi
+
 amazon-auth-proxy.cgiは、RubyのCGIとして書かれています。従来の
 Amazon ECS APIとして動作し、指定した言語のAmazon PAAPIに対して
 有効な認証済みリクエストを作成して呼び出し元に返します。または
 実際にAPIをコールしたのち、結果をそのまま返します。
+
+amazon-auth-proxy.fcgiはFastCGI対応版です。内部的に.cgiを呼び出
+しているので、.cgiも必要です。
 
 amazon-auth-proxy.cgiは、同じディレクトリにあるamazon-auth-proxy.yaml
 というファイルを読み、そこに記述されている各種APIキーとAPIのエ
@@ -37,8 +42,20 @@ use_redirectは、通常trueにして運用してください。これは構築�
 AmazonへのリクエストURLを、302リダイレクトとして呼び出し元に返
 すという意味です。これにより、proxyサーバの負荷を低減します。
 
+
+■amazon-auth-proxy.rb
+amazon-auth-proxy.cgiのSinatra版です。内部で.cgiを読み込んでい
+るため、.cgiも必要です。
+
+Sinatra版は、一つのインスタンスで各国サイトに対応します。このた
+め、.cgiとは設定ファイルの形式が異なります。amazon-auth-proxy.sinatra.yaml
+をamazon-auth-proxy.yamlに変え、access_keyとsecret_key、必要に応
+じてdefault_aidを書き換えて利用して下さい。
+
+
+■権利関係
+Copyright (C) 2011 TADA Tadashi <t@tdtds.jp>
+You can redistribute it and/or modify it under GPL2.
+
 なお、module HMACは、えろぺおさんのコードを流用しています。
 <http://elpeo.jp/diary/20090512.html#p01>
-
-                   Copyright (C) 2009 TADA Tadashi <t@tdtds.jp>
-           You can redistribute it and/or modify it under GPL2.
