@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# amazon-auth-proxy.rb:
+# amazon-auth-proxy.cgi:
 #	Authentication Proxy Server of Amazon Product Advertising API.
 #
 # Copyright (C) 2009 TADA Tadashi <t@tdtds.jp>
