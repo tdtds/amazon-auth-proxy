@@ -2,6 +2,12 @@
 load File.expand_path('../../amazon-auth-proxy.cgi', __FILE__)
 require 'date'
 
+RSpec::Matchers.define :starts_with do |expected|
+	match do |actual|
+		actual[0, expected.length] == expected
+	end
+end
+
 describe 'paapi' do
 	before :each do
 		@conf = {
@@ -35,17 +41,17 @@ describe 'paapi' do
 		end
 
 		it '返り値の第2要素(redirect先)が正しいAWSリクエスト' do
-			paapi( @conf, @req )[1].should match %r|\Ahttp://webservices.amazon.co.jp/onca/xml\?AssociateTag=cshs-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp=|
+			paapi( @conf, @req )[1].should starts_with 'http://webservices.amazon.co.jp/onca/xml?AssociateTag=cshs-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp='
 		end
 
 		it 'Styleを指定するとXSLTを使う' do
 			@req['Style'] = ['dummy']
-			paapi( @conf, @req )[1].should match %r|\Ahttp://xml-jp.amznxslt.com/onca/xml\?AssociateTag=cshs-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&Style=dummy&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp=|
+			paapi( @conf, @req )[1].should starts_with 'http://xml-jp.amznxslt.com/onca/xml?AssociateTag=cshs-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&Style=dummy&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp='
 		end
 
 		it 'AssociateTagを指定するとそれを使う' do
 			@req['AssociateTag'] = ['sample-22']
-			paapi( @conf, @req )[1].should match %r|\Ahttp://webservices.amazon.co.jp/onca/xml\?AssociateTag=sample-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp=|
+			paapi( @conf, @req )[1].should starts_with 'http://webservices.amazon.co.jp/onca/xml?AssociateTag=sample-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp='
 		end
 	end
 
