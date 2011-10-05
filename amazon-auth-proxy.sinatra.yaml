@@ -1,12 +1,15 @@
 access_key: YOUR ACCESS KEY
 secret_key: YOUR SECRET KEY
+aid:
+  jp: cshs-22
+  us: tdiarnet-20
 entry_point:
   'jp': http://webservices.amazon.co.jp/onca/xml
   'us': http://webservices.amazon.com/onca/xml
-  'fr':  http://webservices.amazon.fr/onca/xml
-  'uk':  http://webservices.amazon.co.uk/onca/xml
-  'de':  http://webservices.amazon.de/onca/xml
-  'ca':  http://webservices.amazon.ca/onca/xml
+  'fr': http://webservices.amazon.fr/onca/xml
+  'uk': http://webservices.amazon.co.uk/onca/xml
+  'de': http://webservices.amazon.de/onca/xml
+  'ca': http://webservices.amazon.ca/onca/xml
 xslt_entry_point:
   'jp': http://xml-jp.amznxslt.com/onca/xml
   'us': http://xml-us.amznxslt.com/onca/xml
@@ -14,4 +17,3 @@ xslt_entry_point:
   'uk': http://xml-uk.amznxslt.com/onca/xml
   'de': http://xml-de.amznxslt.com/onca/xml
   'ca': http://xml-ca.amznxslt.com/onca/xml
-default_aid: cshs-22
