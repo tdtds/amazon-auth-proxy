@@ -56,5 +56,8 @@ describe 'paapi' do
 	end
 
 	context '異常系' do
+		it 'AssociateTagがない場合に例外になる' do
+			lambda{ paapi( @conf.delete 'default_aid', @req ) }.should raise_error( ArgumentError )
+		end
 	end
 end

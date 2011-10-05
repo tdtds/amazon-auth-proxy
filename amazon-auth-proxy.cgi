@@ -61,6 +61,7 @@ def paapi( conf, params )
 			end
 		end
 		unless params.keys.include?( 'AssociateTag' ) then
+			raise ArgumentError::new( 'No AssociateTag' ) unless conf['default_aid']
 			q << "AssociateTag=#{u conf['default_aid']}"
 		end
 		q << "Timestamp=#{u DateTime.now.new_offset.strftime('%Y-%m-%dT%XZ') }"
