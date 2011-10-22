@@ -2,7 +2,7 @@
 # amazon-auth-proxy for sinatra
 #
 # Copyright (C) 2011 TADA Tadashi <t@tdtds.jp>
-# You can redistribute it and/or modify it under GPL2.
+# You can redistribute it and/or modify it under GPL.
 #
 load 'amazon-auth-proxy.cgi'
 require 'yaml'
@@ -25,16 +25,27 @@ class AmazonAuthProxyApp < Sinatra::Base
 		conf
 	end
 
+	get '/' do
+		return "access to #{@conf['aid'].keys.map{|a| "/#{a}/"}.join(', ')} with query for Amazon."
+	end
+
 	get '/*/' do
+		country = params[:splat][0]
+		return 400, "400 Bad request: '#{country}' not supported." unless @conf['aid'].keys.index( country )
+
 		aparams = {}
 		params.each do |k, v|
 			aparams[k] = [v] unless k == 'splat'
 		end
 		begin
-			status, body = paapi( make_conf( params[:splat][0] ), aparams )
+			status, body = paapi( make_conf( country ), aparams )
 		rescue ArgumentError
 			return 400, "400 Bad request: #{$!}"
 		end
 		redirect body, 302
+	end
+
+	get '/rpaproxy.yaml' do
+		return 200, {'Content-Type' => 'text/yaml'}, {'locales' => @conf['aid'].keys}.to_yaml
 	end
 end
