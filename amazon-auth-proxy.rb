@@ -46,6 +46,6 @@ class AmazonAuthProxyApp < Sinatra::Base
 	end
 
 	get '/rpaproxy.yaml' do
-		return 200, {'Content-Type' => 'text/yaml'}, {'locales' => @conf['aid'].keys}.to_yaml
+		return 200, {'Content-Type' => 'text/plain'}, {'locales' => @conf['aid'].keys}.to_yaml
 	end
 end
