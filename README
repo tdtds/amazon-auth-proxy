@@ -67,7 +67,9 @@ aid:
   us: tdiarnet-20
 
 Sinatora版では、リバースプロキシサービス向けのrpaproxy.yamlも自動
-生成します。aidで指定した国のみのrpaproxy.yamlを生成します。
+生成します。aidで指定した国のみのrpaproxy.yamlを生成します。名前
+としてamazon-auth-proxy.yamlのnameを利用するので忘れずに書き換えて
+下さい。
 
 
 ■権利関係

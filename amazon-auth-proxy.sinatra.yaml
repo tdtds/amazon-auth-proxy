@@ -1,5 +1,6 @@
 #access_key: YOUR ACCESS KEY. YOU CAN ALSO SPECIFY THIS BY ENV 'AMAZON_ACCESS_KEY'
 #secret_key: YOUR SECRET KEY. YOU CAN ALSO SPECIFY THIS BY ENV 'AMAZON_SECRET_KEY'
+name: tdtds's proxy
 aid:
   jp: cshs-22
   us: tdiarnet-20
