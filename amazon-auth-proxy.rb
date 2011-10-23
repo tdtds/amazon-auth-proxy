@@ -16,8 +16,8 @@ class AmazonAuthProxyApp < Sinatra::Base
 
 	def make_conf( country )
 		conf = {}
-		conf['access_key'] = @conf['access_key']
-		conf['secret_key'] = @conf['secret_key']
+		conf['access_key'] = ENV['AMAZON_ACCESS_KEY'] || @conf['access_key']
+		conf['secret_key'] = ENV['AMAZON_SECRET_KEY'] || @conf['secret_key']
 		conf['entry_point'] = @conf['entry_point'][country]
 		conf['xslt_entry_point'] = @conf['xslt_entry_point'][country]
 		conf['default_aid'] = @conf['aid'][country]
