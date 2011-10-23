@@ -49,8 +49,25 @@ amazon-auth-proxy.cgiのSinatra版です。内部で.cgiを読み込んでい
 
 Sinatra版は、一つのインスタンスで各国サイトに対応します。このた
 め、.cgiとは設定ファイルの形式が異なります。amazon-auth-proxy.sinatra.yaml
-をamazon-auth-proxy.yamlに変え、access_keyとsecret_key、必要に応
-じてdefault_aidを書き換えて利用して下さい。
+をamazon-auth-proxy.yamlに変えて利用して下さい。
+
+HerokuのようなPaaSでの利用を考慮して、access_keyとsecret_keyは
+それぞれ以下の環境変数を優先して使うようになっています:
+
+   AMAZON_ACCESS_KEY
+   AMAZON_SECRET_KEY
+
+お使いのPaaSに応じて上記の環境変数を設定して下さい。また、Amazon
+側の仕様変更により、AssociateTag(aid)が指定されていない国のAmazon
+は利用できなくなっています。自分が管理しているAssociateTagをaid
+に指定して下さい。例:
+
+aid:
+  jp: cshs-22
+  us: tdiarnet-20
+
+Sinatora版では、リバースプロキシサービス向けのrpaproxy.yamlも自動
+生成します。aidで指定した国のみのrpaproxy.yamlを生成します。
 
 
 ■権利関係
