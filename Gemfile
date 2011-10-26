@@ -2,5 +2,9 @@ source :rubygems
 
 gem 'rack'
 gem 'sinatra'
-gem 'rspec'
 gem 'thin'
+
+group :development do
+	gem 'rspec'
+	gem 'foreman'
+end
