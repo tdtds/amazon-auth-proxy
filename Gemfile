@@ -4,7 +4,7 @@ gem 'rack'
 gem 'sinatra'
 gem 'thin'
 
-group :development do
+group :development, :test do
 	gem 'rake'
 	gem 'rspec'
 	gem 'foreman'
