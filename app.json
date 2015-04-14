@@ -1,0 +1,12 @@
+{
+  "name": "amazon-auth-proxy",
+  "env": {
+    "AMAZON_ACCESS_KEY": {
+      "required": true
+    },
+    "AMAZON_SECRET_KEY": {
+      "required": true
+    },
+    "RACK_ENV": "production"
+  }
+}
