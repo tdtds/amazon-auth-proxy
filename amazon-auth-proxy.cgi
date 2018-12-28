@@ -48,22 +48,23 @@ module HMAC
 end
 
 def paapi( conf, params )
+	raise ArgumentError::new( 'No AssociateTag' ) unless conf['default_aid']
+
 	xslt = false
 	qs = [].tap {|q|
 		params.each do |key, values|
 			if key =~ /^(AWSAccessKeyId|SubscriptionId)$/
 				q << "#{u key}=#{u conf['access_key']}"
+			elsif key == 'AssociateTag'
+				# ignore this key and insert after
 			elsif key == 'Timestamp'
-				# ignore this key
+				# ignore this key and insert after
 			else
 				q << "#{u key}=#{u values[0]}"
 				xslt = true if key == 'Style'
 			end
 		end
-		unless params.keys.include?( 'AssociateTag' ) then
-			raise ArgumentError::new( 'No AssociateTag' ) unless conf['default_aid']
-			q << "AssociateTag=#{u conf['default_aid']}"
-		end
+		q << "AssociateTag=#{u conf['default_aid']}"
 		q << "Timestamp=#{u DateTime.now.new_offset.strftime('%Y-%m-%dT%XZ') }"
 	}.sort
 

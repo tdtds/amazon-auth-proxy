@@ -49,9 +49,9 @@ describe 'paapi' do
 			expect(paapi( @conf, @req )[1]).to starts_with 'http://xml-jp.amznxslt.com/onca/xml?AssociateTag=cshs-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&Style=dummy&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp='
 		end
 
-		it 'AssociateTagを指定するとそれを使う' do
+		it 'AssociateTagを指定してあっても上書きする' do
 			@req['AssociateTag'] = ['sample-22']
-			expect(paapi( @conf, @req )[1]).to starts_with 'http://webservices.amazon.co.jp/onca/xml?AssociateTag=sample-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp='
+			expect(paapi( @conf, @req )[1]).to starts_with 'http://webservices.amazon.co.jp/onca/xml?AssociateTag=cshs-22&ItemPage=1&Keywords=Amazon&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=Books&Service=AWSECommerceService&SubscriptionId=SAMPLE_ACCESS_KEY&Timestamp='
 		end
 	end
 
