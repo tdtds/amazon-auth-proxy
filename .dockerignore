@@ -1,0 +1,5 @@
+.git
+.env
+.bundle
+.ruby-version
+vendor/bundle
