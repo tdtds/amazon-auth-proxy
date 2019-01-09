@@ -93,7 +93,7 @@ access_keyとsecret_keyをamazon-auth-proxy.yamlに記述した場合:
 
 ```bash
 % docker run --name amazon-auth-proxy \
-  -v $(pwd)/amazon-auth-proxy.yaml:/app/amazon-auth-proxy:ro \
+  -v $(pwd)/amazon-auth-proxy.yaml:/app/amazon-auth-proxy.yaml:ro \
   -p 80:80 tdtds/amazon-auth-proxy:latest
 ```
 
@@ -101,7 +101,7 @@ access_keyとsecret_keyを環境変数で与える場合:
 
 ```bash
 % docker run --name amazon-auth-proxy \
-  -v $(pwd)/amazon-auth-proxy.yaml:/app/amazon-auth-proxy:ro \
+  -v $(pwd)/amazon-auth-proxy.yaml:/app/amazon-auth-proxy.yaml:ro \
   -e AMAZON_ACCESS_KEY=【YOUR_ACCESS_KEY】 \
   -e AMAZON_SECRET_KEY=【YOUR_SECRET_KEY】 \
   -p 80:80 tdtds/amazon-auth-proxy:latest
